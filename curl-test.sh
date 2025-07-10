@@ -24,16 +24,8 @@ echo "Timeline data"
 echo "$GET_DATA"
 
 echo "Delete Timeline data"
-POST_ID=$(echo "$CREATE_DATA" | jq -r '.id')
 
-echo "$POST_ID"
-
-#if [ -z "$POST_ID" ] || [ "$POST_ID" == "null" ]; then
-#  echo "Error"
-#   exit 1
-#fi
-echo ""
-echo "enter post id"
+echo "Enter post id"
 read USER_INPUT_ID
 
 if ! [[ "$USER_INPUT_ID" =~ ^[0-9]+$ ]]; then
