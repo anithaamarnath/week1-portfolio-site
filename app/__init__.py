@@ -87,3 +87,9 @@ def about_profile(name):
                            title=profile['name'],
                            url=os.getenv("URL"),
                            profiles=profiles)
+
+
+@app.route('/timeline')
+def timeline():
+    posts = TimelinePost.select().order_by(TimelinePost.created_at.desc())
+    return render_template('timeline.html', title="Timeline", posts=posts)

@@ -1,0 +1,110 @@
+{% extends "base.html" %} {% block title %}Timeline{% endblock %} {% block
+content %}
+<div class="container py-4">
+  <h1 class="mb-4" id="timeline-post">Timeline Post</h1>
+  <form
+    method="post"
+    id="timeline-form"
+    action="{{url_for('post_time_line_post')}}"
+    class="mb-4"
+  >
+    <div class="mb-3">
+      <label for="Name" class="form-label">Name:</label> <br />
+      <input
+        type="text"
+        name="name"
+        class="form-control"
+        id="name"
+        placeholder="Your name"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="email">Email:</label> <br />
+      <input
+        type="email"
+        name="name"
+        class="form-control"
+        id="email"
+        placeholder="Your email id"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="email">Content:</label> <br />
+      <textarea
+        class="form-control"
+        name="content"
+        id="content"
+        rows="4"
+        placeholder="Write Your content....."
+        required
+      ></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Post</button>
+  </form>
+  <div id="message" class="alert">
+    <h2 class="mb-3">Timeline</h2>
+    <div id="posts" class="list-group"></div>
+  </div>
+</div>
+
+<script>
+  async function fetchPosts() {
+    const respone = await fetch("/api/timeline_post");
+    const data = await respone.json();
+    const posts = data.timeline_posts.sort((a, b) => b.id - a.id);
+    const postDiv = document.getElementById("posts");
+    postDiv.innerHTML = "";
+
+    posts.forEach((post) => {
+      const div = document.createElement("div");
+
+      div.className = "list-group-item";
+      div.innerHTML = `
+                <div class="d-flex align-items-start">
+                    <div>
+                        <h6>${post.name} <small class="text-muted">(${post.email}) </small> </h6>
+                        <p>${post.content}</p>
+                        <small class="text-muted">${post.created_at}</small>
+                    </div>
+                </div>    
+                   `;
+      postDiv.appendChild(div);
+    });
+  }
+
+  document
+    .getElementById("timeline-form")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+      console.log("Form submitted", e);
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const content = document.getElementById("content").value;
+
+      const formData = new FormData();
+      console.log("Form formData", formData);
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("content", content);
+
+      await fetch("/api/timeline_post", {
+        method: "POST",
+        body: formData,
+      });
+      document.getElementById("timeline-form").reset();
+      fetchPosts();
+    });
+
+  const script = document.createElement("script");
+  script.src =
+    "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js";
+  script.onload = () => {
+    fetchPosts();
+    document.head.appendChild(script);
+  };
+</script>
+
+{% endblock %}
