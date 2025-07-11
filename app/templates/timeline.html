@@ -23,7 +23,7 @@ content %}
       <label for="email">Email:</label> <br />
       <input
         type="email"
-        name="name"
+        name="email"
         class="form-control"
         id="email"
         placeholder="Your email id"
@@ -67,6 +67,7 @@ content %}
                         <h6>${post.name} <small class="text-muted">(${post.email}) </small> </h6>
                         <p>${post.content}</p>
                         <small class="text-muted">${post.created_at}</small>
+                        <button class="btn btn-sm btn-danger" onclick="deletePost(${post.id})"> Delete </button>
                     </div>
                 </div>    
                    `;
@@ -78,33 +79,41 @@ content %}
     .getElementById("timeline-form")
     .addEventListener("submit", async (e) => {
       e.preventDefault();
-      console.log("Form submitted", e);
 
       const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
       const content = document.getElementById("content").value;
 
       const formData = new FormData();
-      console.log("Form formData", formData);
+
       formData.append("name", name);
       formData.append("email", email);
       formData.append("content", content);
 
-      await fetch("/api/timeline_post", {
+      const response = await fetch("/api/timeline_post", {
         method: "POST",
         body: formData,
       });
-      document.getElementById("timeline-form").reset();
-      fetchPosts();
+      if (response.ok) {
+        document.getElementById("timeline-form").reset();
+        fetchPosts();
+      } else {
+        console.log("Error submitting form", response.statusText);
+      }
     });
 
-  const script = document.createElement("script");
-  script.src =
-    "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js";
-  script.onload = () => {
-    fetchPosts();
-    document.head.appendChild(script);
-  };
+  async function deletePost(id) {
+    const response = await fetch(`/api/timeline_post/${id}`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      fetchPosts();
+    } else {
+      console.log("Error deleting post", response.statusText);
+    }
+  }
+
+  fetchPosts();
 </script>
 
 {% endblock %}
