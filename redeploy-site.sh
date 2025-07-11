@@ -30,7 +30,6 @@ pip install -r requirements.txt
 
 echo "Starting new detached tmux session: $SESSION_NAME"
 tmux new-session -d -s "$SESSION_NAME"
-tmux send-keys -t "$SESSION_NAME" "cd $PROJECT_DIR" C-m
 tmux send-keys -t "$SESSION_NAME" "source venv/bin/activate" C-m
 tmux send-keys -t "$SESSION_NAME" "flask run --host=0.0.0.0 --port=5000" C-m
 
