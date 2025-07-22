@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Changing to the actual project folder"
+echo "Script for running service"
 PROJECT_DIR=week1-portfolio-site
 
 
@@ -26,11 +26,6 @@ echo "Restating myportfolio systemd service"
 
 sudo systemctl daemon-reload
 sudo systemctl restart myportfolio.service
-
-echo "Checking status"
-
-sudo systemctl status myportfolio.service
-
 
 echo "Deployment done"
 
