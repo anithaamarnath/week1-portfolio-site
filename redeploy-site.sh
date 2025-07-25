@@ -11,22 +11,12 @@ cd "$PROJECT_DIR"
 echo "Feteching latest code form Github..."
 git fetch && git reset origin/main --hard
 
-echo "Activating Python Virtual environment"
-if [ ! -d venv ]; then
-	echo "Creating Virtual environment"
-	python3 -m venv venv
-fi
+echo "Running Docker command"
+docker compose -f docker-compose.prod.yml down
 
-source venv/bin/activate
+docker compose -f docker-compose.prod.yml up -d --build
 
-echo "Installing python dependencies"
-pip install -r requirements.txt
 
-echo "Restating myportfolio systemd service"
-
-sudo systemctl daemon-reload
-sudo systemctl restart myportfolio.service
-
-echo "Deployment done"
+echo "Completed !!!"
 
 
