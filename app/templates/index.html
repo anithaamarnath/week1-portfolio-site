@@ -3,19 +3,20 @@ content %}
 <div class="row row-cols-1 row-cols-md-2 g-4">
   {% for profile in profiles %}
   <div class="col">
-    <div class="profile col border border-light rounded-5 container-sm px-5">
+    <div class="card shadow-sm border-0 rounded-4 h-100 profile-card">
       <a
         href="/about/{{profile.name | lower | replace(' ','-')}}"
         class="text-decoration-none text-reset"
       >
-        <div class="profile-picture">
-          <img
-            src="{{url_for('static', filename=profile.profile_picture)}}"
-            alt="Profile Picture"
-          />
+        <div class="card-img-top text-center p-3">
+          <img src="{{url_for('static', filename=profile.profile_picture)}}"
+          alt="Profile Picture" class=""img-fluid rounded-circle" style="width:
+          120px; height: 150px; object-fit:cover;" />
         </div>
-        <h2 class="profile-name">{{ profile.name }}</h2>
-        <p class="profile-short-bio">{{profile.short_bio}}</p>
+        <div class="card-body test-center">
+          <h2 class="card-title fs-4">{{ profile.name }}</h2>
+          <p class="card-text">{{profile.short_bio}}</p>
+        </div>
       </a>
     </div>
   </div>

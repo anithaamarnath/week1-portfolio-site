@@ -49,6 +49,15 @@ body {
     padding-right: 0px;
 }
 
+.profile-card {
+    background-color: white;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.profile-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
 .profile {
     background-color: #1d539f !important;
     text-align: center;
