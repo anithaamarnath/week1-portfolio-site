@@ -69,7 +69,7 @@ profiles = [
         },
         "map": "img/anitha_visited_map.png",
         "hobbies": [
-            ("Travel", "/img/anitha_travel_hobbie.jpg"),
+            ("Travel", "/img/anitha_travel_hobbie.JPG"),
             ("Chess", "img/anitha_chess_hobbie.jpg"),
         ]
     }
