@@ -29,7 +29,7 @@ class AppTestCase(unittest.TestCase):
         headers = dict(response.headers)
 
         assert "<title>MLH Fellows</title>" in html
-        assert '<h2 class="profile-name">Anitha Amarnath</h2>' in html
+        assert '<h2 class="card-title fs-4">Anitha Amarnath</h2>' in html
         assert headers["Content-Type"] == "text/html; charset=utf-8"
 
     def test_timeline(self):
